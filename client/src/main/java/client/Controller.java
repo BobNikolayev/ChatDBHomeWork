@@ -101,7 +101,7 @@ public class Controller implements Initializable {
         }
         return login;
     }
-//метод сохранения сообщений
+//метод сохранения сообщений в файл
     public void messageSave(String msg){
         FileWriter historyWriter  = null;
 
