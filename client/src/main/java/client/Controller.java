@@ -120,7 +120,7 @@ public class Controller implements Initializable {
             }
         }
     }
-//метод выведения истории
+//метод выведения истории в текст арию
     public void historyPrint(){
 //        FileInputStream fis = null;
 //        InputStreamReader isr = null;
