@@ -76,7 +76,7 @@ public class Controller implements Initializable {
         textArea.clear();
         historyPrint();
     }
-//метод создания файла
+//метод создания файла с проверкой существующего
     public String historyCreator(){
         FileOutputStream historyOut = null;
 
@@ -115,12 +115,12 @@ public class Controller implements Initializable {
         }finally {
             try {
                 historyWriter.close();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
-//метод выведения истории
+//метод выведения истории в текст арию
     public void historyPrint(){
 //        FileInputStream fis = null;
 //        InputStreamReader isr = null;
