@@ -76,7 +76,7 @@ public class Controller implements Initializable {
         textArea.clear();
         historyPrint();
     }
-//метод создания файла
+//метод создания файла с проверкой существующего
     public String historyCreator(){
         FileOutputStream historyOut = null;
 
