@@ -19,11 +19,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -53,6 +55,7 @@ public class Controller implements Initializable {
 
     private boolean authenticated;
     private String nick;
+    private String login;
 
     private Stage stage;
     private Stage regStage;
@@ -71,6 +74,74 @@ public class Controller implements Initializable {
         }
         setTitle(nick);
         textArea.clear();
+        historyPrint();
+    }
+
+    public String historyCreator(){
+        FileOutputStream historyOut = null;
+
+        String ini = "ini";
+
+        String log = loginField.getText().trim();
+
+        File history = new File("history_" + log + ".txt");
+        if(history.length() != 0){
+        return login = loginField.getText().trim();
+        }else{
+            try {
+
+                history.createNewFile();
+                historyOut = new FileOutputStream("history_" + login + ".txt");
+                historyOut.write(ini.getBytes());
+                return login = loginField.getText().trim();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return login;
+    }
+
+    public void messageSave(String msg){
+        FileWriter historyWriter  = null;
+
+        try {
+            historyWriter = new FileWriter("history_" + login + ".txt", true);
+
+            historyWriter.write(msg + " ");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                historyWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void historyPrint(){
+//        FileInputStream fis = null;
+//        InputStreamReader isr = null;
+
+
+        try {
+//            fis = new FileInputStream("history_" + login + ".txt");
+//            isr = new InputStreamReader(fis,"UTF-8");
+            Path file = Paths.get("history_" + login + ".txt");
+            List<String> lines = Files.readAllLines(file);
+
+
+
+            textArea.appendText(String.valueOf(lines));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -111,7 +182,9 @@ public class Controller implements Initializable {
                         String str = in.readUTF();
 
                         if (str.startsWith("/authok ")) {
+                            historyCreator();
                             nick = str.split("\\s")[1];
+//                            historyCreator();
                             setAuthenticated(true);
                             break;
                         }
@@ -130,6 +203,7 @@ public class Controller implements Initializable {
                         }
 
                         textArea.appendText(str + "\n");
+
                     }
 
 
@@ -139,6 +213,7 @@ public class Controller implements Initializable {
 
                         if (str.startsWith("/")) {
                             if (str.equals("/end")) {
+                                messageSave(textArea.getText());
                                 setAuthenticated(false);
                                 break;
                             }
@@ -154,6 +229,7 @@ public class Controller implements Initializable {
 
                         } else {
                             textArea.appendText(str + "\n");
+
                         }
                     }
                 }catch (RuntimeException e)   {
