@@ -1,6 +1,6 @@
 package server;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
@@ -44,13 +44,13 @@ public class Server {
                 System.out.println("socket.getLocalSocketAddress() " + socket.getLocalSocketAddress());
                 new ClientHandler(this, socket);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 server.close();
 
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -59,9 +59,11 @@ public class Server {
     void broadcastMsg(ClientHandler sender, String msg) {
         String message = String.format("%s : %s", sender.getNick(), msg);
 
-        for (ClientHandler client : clients) {
-            client.sendMsg(message);
-        }
+            for (ClientHandler client : clients) {
+                client.sendMsg(message);
+
+
+            }
     }
 
     void privateMsg(ClientHandler sender, String receiver, String msg) {

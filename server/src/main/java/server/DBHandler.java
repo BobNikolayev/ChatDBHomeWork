@@ -24,14 +24,11 @@ public class DBHandler {
         }
     }
 
-    private static void prepareAllStatements()  {
-        try {
+    private static void prepareAllStatements() throws SQLException {
+
             psGetNickname = connection.prepareStatement("SELECT nick FROM userData WHERE login = ? AND password = ?;");
             psRegistration = connection.prepareStatement("INSERT INTO userData(login, password, nick) VALUES (? ,? ,? );");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-       
+
 
 
 
