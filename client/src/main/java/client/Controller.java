@@ -115,7 +115,7 @@ public class Controller implements Initializable {
         }finally {
             try {
                 historyWriter.close();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
