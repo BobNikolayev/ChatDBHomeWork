@@ -76,7 +76,7 @@ public class Controller implements Initializable {
         textArea.clear();
         historyPrint();
     }
-
+//метод создания файла
     public String historyCreator(){
         FileOutputStream historyOut = null;
 
@@ -101,7 +101,7 @@ public class Controller implements Initializable {
         }
         return login;
     }
-
+//метод сохранения сообщений
     public void messageSave(String msg){
         FileWriter historyWriter  = null;
 
@@ -120,7 +120,7 @@ public class Controller implements Initializable {
             }
         }
     }
-
+//метод выведения истории
     public void historyPrint(){
 //        FileInputStream fis = null;
 //        InputStreamReader isr = null;
